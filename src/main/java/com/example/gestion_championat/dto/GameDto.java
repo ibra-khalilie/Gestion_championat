@@ -1,33 +1,23 @@
-package com.example.gestion_championat.model;
+package com.example.gestion_championat.dto;
 
-import jakarta.persistence.*;
+import com.example.gestion_championat.model.Equipe;
+import com.example.gestion_championat.model.Journee;
+import com.example.gestion_championat.model.Stade;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Game {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GameDto {
     private Long id;
     private int pointEquipe1;
     private int pointEquipe2;
     private int idEquipe1;
     private int idEquipe2;
-
-    @ManyToOne
     private Stade stade;
-
-    @ManyToOne
     private Equipe equipe1;
-
-    @ManyToOne
     private Equipe equipe2;
-
-    @ManyToOne
     private Journee journee;
-
 }
