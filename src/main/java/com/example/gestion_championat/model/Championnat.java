@@ -30,6 +30,6 @@ public class Championnat {
     @ManyToOne
     private Equipe equipe;
 
-    @OneToMany(mappedBy = "championnat")
+    @OneToMany(mappedBy = "championnat",fetch = FetchType.EAGER)
     private List<Journee> journeeList;
 }
