@@ -1,12 +1,11 @@
-package model;
+package com.example.gestion_championat.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,8 +17,12 @@ public class Stade {
     private Long id;
     private String nom;
     private String adresse;
-    private String capacité;
+    private String capacite;
     private String telephone;
+    @OneToMany(mappedBy = "stade")
+    private List<Equipe> equipe;
+    @OneToMany(mappedBy ="stade" )
+    private List<Game> game;
 
 
 }

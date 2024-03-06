@@ -1,20 +1,18 @@
-package model;
+package com.example.gestion_championat.model;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Championat {
+public class Championnat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -26,4 +24,12 @@ public class Championat {
     private Long pointNull;
     private String typeClassement;
 
+    @ManyToOne
+    private Pays pays;
+
+    @ManyToOne
+    private Equipe equipe;
+
+    @OneToMany(mappedBy = "championnat")
+    private List<Journee> journeeList;
 }

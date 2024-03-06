@@ -1,14 +1,12 @@
-package model;
+package com.example.gestion_championat.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,7 +18,6 @@ public class Equipe {
     private Long id;
     private String nom;
     private Date dateDeCreation;
-    private Long idSate; //A voir
     private String logo;
     private String nomEntraineur;
     private String president;
@@ -29,6 +26,10 @@ public class Equipe {
     private String numero;
     private String siteWeb;
 
+    @ManyToOne
+    private Stade stade;
 
+    @ManyToMany
+    private List<Championnat> championnatList;
 
 }
