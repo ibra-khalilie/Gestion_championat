@@ -1,26 +1,21 @@
-package model;
+package com.example.gestion_championat.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.gestion_championat.model.Championnat;
+import com.example.gestion_championat.model.Stade;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Equipe {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+public class EquipeDto {
     private Long id;
     private String nom;
     private Date dateDeCreation;
-    private Long idSate; //A voir
     private String logo;
     private String nomEntraineur;
     private String president;
@@ -28,7 +23,6 @@ public class Equipe {
     private String Siege;
     private String numero;
     private String siteWeb;
-
-
-
+    private Stade stade;
+    private List<Championnat> championnatList;
 }
