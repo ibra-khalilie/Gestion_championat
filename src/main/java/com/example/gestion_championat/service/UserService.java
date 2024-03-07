@@ -11,14 +11,16 @@ public class UserService {
 
     private UserRepository userRepository;
 
-
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
-
     public List<User> getAll(){
         return this.userRepository.findAll();
+    }
+
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
 }
