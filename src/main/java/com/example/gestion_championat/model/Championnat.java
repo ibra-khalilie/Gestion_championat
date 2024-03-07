@@ -27,8 +27,8 @@ public class Championnat {
     @ManyToOne
     private Pays pays;
 
-    @ManyToOne
-    private Equipe equipe;
+    @ManyToMany(mappedBy = "championnatList")
+    private List<Equipe> equipeList;
 
     @OneToMany(mappedBy = "championnat",fetch = FetchType.EAGER)
     private List<Journee> journeeList;

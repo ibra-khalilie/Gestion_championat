@@ -30,6 +30,9 @@ public class Equipe {
     private Stade stade;
 
     @ManyToMany
+    @JoinTable(name = "equipe_championnat",
+            joinColumns = @JoinColumn(name = "equipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "championnat_id"))
     private List<Championnat> championnatList;
 
 }
