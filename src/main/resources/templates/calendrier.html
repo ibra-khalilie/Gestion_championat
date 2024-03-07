@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Calendrier des matchs de la Ligue 1</h1>
+    <div th:each="journee : ${journees}">
+        <h2>Journée <span th:text="${journee.numero}"></span></h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Équipe 1</th>
+                <th>Score</th>
+                <th>Équipe 2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="match : ${journee.game}">
+                <td th:text="${match.date}"></td>
+                <td th:text="${match.equipe1.nom}"></td>
+                <td th:text="${match.pointEquipe1 + ' - ' + match.pointEquipe2}"></td>
+                <td th:text="${match.equipe2.nom}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
