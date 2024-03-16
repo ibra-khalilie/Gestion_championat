@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class Game {
     private int pointEquipe2;
     private int idEquipe1;
     private int idEquipe2;
+    private Date date;
 
     @ManyToOne
     private Stade stade;

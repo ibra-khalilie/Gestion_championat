@@ -3,34 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier</title>
-
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Calendrier des matchs de la Ligue 1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
     <h1>Calendrier des matchs de la Ligue 1</h1>
-    <div th:each="journee : ${journees}">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+        <!-- Bouton précédent -->
+        <button class="btn btn-primary mr-2" onclick="previousJournee()">&lt;</button>
+        <!-- Sélecteur de journée -->
+        <select class="form-select" aria-label="Sélectionner une journée" onchange="showMatchs()" id="journeeSelect">
+            <!-- Utilisation de Thymeleaf pour itérer sur la liste des journées -->
+            <option th:each="journee : ${journees}"
+                    th:value="${'journee-' + journee.id}"
+                    th:text="${'Journée ' + journee.numero}"
+                    th:selected="${journee.numero == 1}"></option>
+        </select>
+        <!-- Bouton suivant -->
+        <button class="btn btn-primary ml-2" onclick="nextJournee()">&gt;</button>
+    </div>
+
+    <!-- Affichage des matchs pour chaque journée -->
+    <div th:each="journee : ${journees}" th:id="${'journee-' + journee.id}" style="display: none;">
         <h2>Journée <span th:text="${journee.numero}"></span></h2>
+        <!-- Affichage du championnat -->
+        <p>Calendrier et résultats
+            <span th:text="${journee.championnat.nom + ' (' + #dates.format(journee.championnat.dateDebut, 'dd-MM-yyyy') + ' - ' + #dates.format(journee.championnat.dateFin, 'dd-MM-yyyy') + ')'}"></span>
+        </p>
         <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Équipe 1</th>
-                <th>Score</th>
-                <th>Équipe 2</th>
-            </tr>
-            </thead>
             <tbody>
+            <!-- Utilisation de Thymeleaf pour itérer sur les matchs -->
             <tr th:each="match : ${journee.game}">
-                <td th:text="${match.date}"></td>
-                <td th:text="${match.equipe1.nom}"></td>
-                <td th:text="${match.pointEquipe1 + ' - ' + match.pointEquipe2}"></td>
-                <td th:text="${match.equipe2.nom}"></td>
+                <td th:text="${#dates.format(match.date, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${match.equipe1.nom + ' ' + match.pointEquipe1 + ' - ' + match.pointEquipe2 + ' ' + match.equipe2.nom}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function showMatchs() {
+        var selectElement = document.getElementById('journeeSelect');
+        var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+
+        // Masquer tous les tableaux de matchs
+        var matchTables = document.querySelectorAll('div[id^="journee-"]');
+        matchTables.forEach(function(table) {
+            table.style.display = 'none';
+        });
+
+        // Afficher le tableau de matchs de la journée sélectionnée
+        var selectedJourneeTable = document.getElementById(selectedValue);
+        selectedJourneeTable.style.display = 'block';
+    }
+
+    function previousJournee() {
+        var selectElement = document.getElementById('journeeSelect');
+        if (selectElement.selectedIndex > 0) {
+            selectElement.selectedIndex--;
+            showMatchs();
+        }
+    }
+
+    function nextJournee() {
+        var selectElement = document.getElementById('journeeSelect');
+        if (selectElement.selectedIndex < selectElement.options.length - 1) {
+            selectElement.selectedIndex++;
+            showMatchs();
+        }
+    }
+
+    // Appeler la fonction showMatchs pour afficher la journée par défaut
+    showMatchs();
+</script>
 </body>
 </html>

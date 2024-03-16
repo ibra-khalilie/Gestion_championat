@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +22,5 @@ public class GameDto {
     private Equipe equipe1;
     private Equipe equipe2;
     private Journee journee;
+    private Date date;
 }

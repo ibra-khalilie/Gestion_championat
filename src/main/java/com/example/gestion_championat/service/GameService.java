@@ -9,14 +9,17 @@ import java.util.List;
 @Service
 public class GameService {
 
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    private GameService(GameRepository gameRepository){
+    public GameService(GameRepository gameRepository){
         this.gameRepository = gameRepository;
     }
 
-
     public List<Game> getAll(){
         return this.gameRepository.findAll();
+    }
+
+    public List<Game> getMatchsByJournee(Long journeeId) {
+        return this.gameRepository.findByJourneeId(journeeId);
     }
 }

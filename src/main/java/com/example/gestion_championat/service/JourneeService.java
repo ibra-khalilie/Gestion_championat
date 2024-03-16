@@ -9,13 +9,14 @@ import java.util.List;
 @Service
 public class JourneeService {
 
-    private JourneeRepository journeeRepository;
+    private final JourneeRepository journeeRepository;
 
-    public JourneeService(JourneeRepository journeeRepository){
+    public JourneeService(JourneeRepository journeeRepository) {
         this.journeeRepository = journeeRepository;
     }
 
-    public List<Journee> getAll(){
+    public List<Journee> getAllJournees() {
         return journeeRepository.findAll();
     }
+
 }
