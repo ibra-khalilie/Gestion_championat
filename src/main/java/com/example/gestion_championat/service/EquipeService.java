@@ -10,14 +10,21 @@ import java.util.List;
 @Service
 public class EquipeService{
 
-private EquipeRepository EquipeRepository;
+private EquipeRepository equipeRepository;
 
 
 public EquipeService(EquipeRepository EquipeRepository) {
-    this.EquipeRepository = EquipeRepository;
+    this.equipeRepository = EquipeRepository;
 }
 
 public List<Equipe> getAll(){
-    return EquipeRepository.findAll();
+    return equipeRepository.findAll();
 }
+
+public Equipe findEquipeByName(String nom) {
+    return equipeRepository.findByNom(nom);
 }
+
+}
+
+

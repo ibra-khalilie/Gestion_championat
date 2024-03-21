@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement Ligue 1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .cercle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .victoire { background-color: #4CAF50; } /* Vert */
+        .nul { background-color: #D3D3D3; } /* Jaune */
+        .defaite { background-color: #F44336; } /* Rouge */
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4" th:text="${' Classement' + ' ' + championnat.nom}"></h2>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>pts</th>
+            <th>J.</th>
+            <th>G.</th>
+            <th>N.</th>
+            <th>P.</th>
+            <th>p.</th>
+            <th>c.</th>
+            <th>+/-</th>
+            <th>
+                G.
+                N.
+                P.
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="equipe, stat : ${classement}">
+            <td th:text="${equipe.points}"></td>
+            <td th:text="${equipe.joues}"></td>
+            <td th:text="${equipe.gagnes}"></td>
+            <td th:text="${equipe.nuls}"></td>
+            <td th:text="${equipe.perdus}"></td>
+            <td th:text="${equipe.butsPour}"></td>
+            <td th:text="${equipe.butsContre}"></td>
+            <td th:text="${equipe.differenceButs}"></td>
+            <td>
+                <span th:each="i : ${#numbers.sequence(1, equipe.gagnes)}"><span class="cercle victoire"></span></span>
+                <span th:each="i : ${#numbers.sequence(1, equipe.nuls)}"><span class="cercle nul"></span></span>
+                <span th:each="i : ${#numbers.sequence(1, equipe.perdus)}"><span class="cercle defaite"></span></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js" integrity="sha384-ZzWQb9Tm2YVQ6eB7b6Awz3lRy1R6B-NJ9fF5cC3Ff7l6DVwJqIzVLEV8RhZ9sRH5" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy4Ck4SOF4y4Ck4C2DgHfViXydVeLm+JDM" crossorigin="anonymous"></script>
+</body>
+</html>

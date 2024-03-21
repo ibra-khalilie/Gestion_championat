@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Informations de l'Équipe</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 th:text="${equipe.nom}"></h1>
+    <img th:src="@{${equipe.logo}}" class="img-fluid" alt="Logo de l'équipe">
+    <p><strong>Nom :</strong> <span th:text="${equipe.nom}"></span></p>
+    <p><strong>Fondé en :</strong> <span th:text="${equipe.dateDeCreation}"></span></p>
+    <p><strong>Président :</strong> <span th:text="${equipe.president}"></span></p>
+    <p><strong>Entraîneur :</strong> <span th:text="${equipe.nomEntraineur}"></span></p>
+
+    <h3>Stade</h3>
+    <p><strong>Site :</strong> <span th:text="${equipe.siteWeb}"></span></p>
+    <p><strong>Statut :</strong> <span th:text="${equipe.statut}"></span></p>
+    <p><strong>Siège :</strong> <span th:text="${equipe.siege}"></span></p>
+
+    <h3>Stade de </strong> <span th:text="${equipe.nom}"></span></h3>
+    <p><strong>Stade :</strong> <span th:text="${equipe.stade.nom}"></span></p>
+    <p><strong>Capacité :</strong> <span th:text="${equipe.stade.capacite + ' ' + 'places'}"></span></p>
+    <p><strong>Adresse du stade :</strong> <span th:text="${equipe.stade.adresse}"></span></p>
+    <p><strong>Tel.Stade :</strong> <span th:text="${equipe.stade.telephone}"></span></p>
+</div>
+</body>
+</html>

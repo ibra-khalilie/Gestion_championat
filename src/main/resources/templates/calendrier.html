@@ -8,7 +8,6 @@
 </head>
 <body>
 <div class="container">
-    <h1>Calendrier des matchs de la Ligue 1</h1>
     <div class="d-flex justify-content-center align-items-center mb-3">
         <!-- Bouton précédent -->
         <button class="btn btn-primary mr-2" onclick="previousJournee()">&lt;</button>
@@ -18,7 +17,7 @@
             <option th:each="journee : ${journees}"
                     th:value="${'journee-' + journee.id}"
                     th:text="${'Journée ' + journee.numero}"
-                    th:selected="${journee.numero == 1}"></option>
+                    th:selected="${journee.numero == 2}"></option>
         </select>
         <!-- Bouton suivant -->
         <button class="btn btn-primary ml-2" onclick="nextJournee()">&gt;</button>
@@ -26,7 +25,6 @@
 
     <!-- Affichage des matchs pour chaque journée -->
     <div th:each="journee : ${journees}" th:id="${'journee-' + journee.id}" style="display: none;">
-        <h2>Journée <span th:text="${journee.numero}"></span></h2>
         <!-- Affichage du championnat -->
         <p>Calendrier et résultats
             <span th:text="${journee.championnat.nom + ' (' + #dates.format(journee.championnat.dateDebut, 'dd-MM-yyyy') + ' - ' + #dates.format(journee.championnat.dateFin, 'dd-MM-yyyy') + ')'}"></span>
