@@ -50,6 +50,8 @@ public class ChampionnatController {
             model.addAttribute("championnat", tousLesChampionnatsDto.get(0));
         }
 
+        model.addAttribute("activePage", "classement");
+
         return "classement";
     }
 
@@ -68,6 +70,8 @@ public class ChampionnatController {
 
 
         model.addAttribute("classement", classement);
+        model.addAttribute("activePage", "classement");
+
 
         return "classement";
     }

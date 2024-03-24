@@ -34,6 +34,7 @@
                 <a th:each="championnat : ${tousLesChampionnats}"
                    th:href="@{/classement/{id}(id=${championnat.id})}"
                    th:text="${championnat.nom}"
+                   th:classappend="${championnatId == championnat.id ? 'bg-dark text-white' : ''}"
                    class="list-group-item list-group-item-action">
                 </a>
             </div>
