@@ -11,4 +11,5 @@ import java.util.List;
 public interface ChampionnatRepository extends JpaRepository<Championnat,Long> {
 
     Championnat findChampionnatById(Long id);
+
 }

@@ -13,51 +13,70 @@
             border-radius: 50%;
             margin-left: 5px;
         }
-        .victoire { background-color: #4CAF50; } /* Vert */
-        .nul { background-color: #D3D3D3; } /* Jaune */
-        .defaite { background-color: #F44336; } /* Rouge */
+        .victoire { background-color: #4CAF50; }
+        .nul { background-color: #D3D3D3; }
+        .defaite { background-color: #F44336; }
+
+        .active-championnat {
+            background-color: #f0f0f0; /* Couleur de fond pour l'élément actif */
+            border-left: 5px solid #4CAF50; /* Bordure à gauche pour le marquer */
+            color: black; /* Couleur du texte */
+        }
     </style>
 </head>
 <body>
+<div th:replace="header :: header"></div>
 <div class="container mt-4">
-    <h2 class="mb-4" th:text="${' Classement' + ' ' + championnat.nom}"></h2>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>pts</th>
-            <th>J.</th>
-            <th>G.</th>
-            <th>N.</th>
-            <th>P.</th>
-            <th>p.</th>
-            <th>c.</th>
-            <th>+/-</th>
-            <th>
-                G.
-                N.
-                P.
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="equipe, stat : ${classement}">
-            <td th:text="${equipe.points}"></td>
-            <td th:text="${equipe.joues}"></td>
-            <td th:text="${equipe.gagnes}"></td>
-            <td th:text="${equipe.nuls}"></td>
-            <td th:text="${equipe.perdus}"></td>
-            <td th:text="${equipe.butsPour}"></td>
-            <td th:text="${equipe.butsContre}"></td>
-            <td th:text="${equipe.differenceButs}"></td>
-            <td>
-                <span th:each="i : ${#numbers.sequence(1, equipe.gagnes)}"><span class="cercle victoire"></span></span>
-                <span th:each="i : ${#numbers.sequence(1, equipe.nuls)}"><span class="cercle nul"></span></span>
-                <span th:each="i : ${#numbers.sequence(1, equipe.perdus)}"><span class="cercle defaite"></span></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <!-- Colonne de gauche : Liste des championnats -->
+        <div class="col-md-2">
+            <div class="list-group">
+                <a th:each="championnat : ${tousLesChampionnats}"
+                   th:href="@{/classement/{id}(id=${championnat.id})}"
+                   th:text="${championnat.nom}"
+                   class="list-group-item list-group-item-action">
+                </a>
+            </div>
+        </div>
+
+        <!-- Colonne de droite : Classement du championnat sélectionné -->
+        <div class="col-md-10">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>pts</th>
+                    <th>J.</th>
+                    <th>G.</th>
+                    <th>N.</th>
+                    <th>P.</th>
+                    <th>p.</th>
+                    <th>c.</th>
+                    <th>+/-</th>
+                    <th>G. N. P.</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="equipe, stat : ${classement}">
+                    <td th:text="${equipe.points}"></td>
+                    <td th:text="${equipe.joues}"></td>
+                    <td th:text="${equipe.gagnes}"></td>
+                    <td th:text="${equipe.nuls}"></td>
+                    <td th:text="${equipe.perdus}"></td>
+                    <td th:text="${equipe.butsPour}"></td>
+                    <td th:text="${equipe.butsContre}"></td>
+                    <td th:text="${equipe.differenceButs}"></td>
+                    <td>
+                        <span th:each="i : ${#numbers.sequence(1, equipe.gagnes)}"><span class="cercle victoire"></span></span>
+                        <span th:each="i : ${#numbers.sequence(1, equipe.nuls)}"><span class="cercle nul"></span></span>
+                        <span th:each="i : ${#numbers.sequence(1, equipe.perdus)}"><span class="cercle defaite"></span></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<div th:replace="footer :: footer"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js" integrity="sha384-ZzWQb9Tm2YVQ6eB7b6Awz3lRy1R6B-NJ9fF5cC3Ff7l6DVwJqIzVLEV8RhZ9sRH5" crossorigin="anonymous"></script>

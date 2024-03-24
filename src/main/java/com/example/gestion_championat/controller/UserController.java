@@ -20,14 +20,14 @@ public class UserController {
         this.defaultMapper = defaultMapper;
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/")
     public ModelAndView Login(@RequestParam("username") String username, @RequestParam("password") String password) {
         User user = userService.findByLogin(username);
 
         if (user != null && user.getMdp().equals(password)) {
 
             UserDto userDto = defaultMapper.mapEntityToDto(user, UserDto.class);
-            ModelAndView mav = new ModelAndView("redirect:/home");
+            ModelAndView mav = new ModelAndView("redirect:/calendrier");
             mav.addObject("user", userDto);
 
             return mav;
@@ -40,13 +40,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String Login() {
         return "login";
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 }

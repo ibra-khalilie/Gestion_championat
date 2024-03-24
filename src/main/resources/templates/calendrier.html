@@ -1,3 +1,4 @@
+<!--calendrier.html-->
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,54 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendrier des matchs de la Ligue 1</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .score-box {
+            display: inline-block;
+            background-color: black;
+            color: white;
+            padding: 5px;
+
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+<div th:replace="header :: header"></div>
+<div class="container custom-container">
     <div class="d-flex justify-content-center align-items-center mb-3">
-        <!-- Bouton précédent -->
         <button class="btn btn-primary mr-2" onclick="previousJournee()">&lt;</button>
-        <!-- Sélecteur de journée -->
         <select class="form-select" aria-label="Sélectionner une journée" onchange="showMatchs()" id="journeeSelect">
-            <!-- Utilisation de Thymeleaf pour itérer sur la liste des journées -->
             <option th:each="journee : ${journees}"
                     th:value="${'journee-' + journee.id}"
                     th:text="${'Journée ' + journee.numero}"
                     th:selected="${journee.numero == 2}"></option>
         </select>
-        <!-- Bouton suivant -->
         <button class="btn btn-primary ml-2" onclick="nextJournee()">&gt;</button>
     </div>
 
-    <!-- Affichage des matchs pour chaque journée -->
     <div th:each="journee : ${journees}" th:id="${'journee-' + journee.id}" style="display: none;">
-        <!-- Affichage du championnat -->
-        <p>Calendrier et résultats
-            <span th:text="${journee.championnat.nom + ' (' + #dates.format(journee.championnat.dateDebut, 'dd-MM-yyyy') + ' - ' + #dates.format(journee.championnat.dateFin, 'dd-MM-yyyy') + ')'}"></span>
-        </p>
-        <table class="table table-striped">
-            <tbody>
-            <!-- Utilisation de Thymeleaf pour itérer sur les matchs -->
-            <tr th:each="match : ${journee.game}">
-                <td th:text="${#dates.format(match.date, 'dd-MM-yyyy HH:mm')}"></td>
-                <td th:text="${match.equipe1.nom + ' ' + match.pointEquipe1 + ' - ' + match.pointEquipe2 + ' ' + match.equipe2.nom}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div>
+            <h3 th:text="${ 'Calendrier et Résultats ' + journee.championnat.nom + ' ' + #dates.format(journee.championnat.dateDebut, 'yyyy') + ' - ' + #dates.format(journee.championnat.dateFin, 'yyyy') + ' ' }"></h3>
+            <table class="table table-striped">
+                <tbody>
+                <th:block th:with="previousDate = null">
+                    <th:block th:each="match : ${journee.game}">
+                        <th:block th:if="${match.date} != previousDate">
+                            <tr>
+                                <td colspan="3"><p th:text="${#dates.format(match.date, 'EEEE dd MMMM')}"></p></td>
+                            </tr>
+                            <th:block th:assign="previousDate=${match.date}"></th:block>
+                        </th:block>
+                        <tr>
+                            <td>
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col text-right">
+                                        <a th:href="@{/equipe/{nom}(nom=${match.equipe1.nom})}" style="text-decoration: none; color: black">
+                                            <span th:text="${match.equipe1.nom}"></span>
+                                            <img th:src="@{${'/logos/' + match.equipe1.logo}}" th:alt="${match.equipe1.nom}" style="width: 20px; height: auto;" />
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span class="score-box" th:text="' ' + ${match.pointEquipe1} + ' - ' + ${match.pointEquipe2} + ' '"></span>
+                                    </div>
+                                    <div class="col">
+                                        <a th:href="@{/equipe/{nom}(nom=${match.equipe2.nom})}" style="text-decoration: none; color: black">
+                                            <img th:src="@{${'/logos/' + match.equipe2.logo}}" th:alt="${match.equipe2.nom}" style="width: 20px; height: auto;" />
+                                            <span th:text="${match.equipe2.nom}"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+
+    <div th:replace="footer :: footer"></div>
+
 
 <script>
     function showMatchs() {
         var selectElement = document.getElementById('journeeSelect');
         var selectedValue = selectElement.options[selectElement.selectedIndex].value;
 
-        // Masquer tous les tableaux de matchs
         var matchTables = document.querySelectorAll('div[id^="journee-"]');
         matchTables.forEach(function(table) {
             table.style.display = 'none';
         });
 
-        // Afficher le tableau de matchs de la journée sélectionnée
         var selectedJourneeTable = document.getElementById(selectedValue);
         selectedJourneeTable.style.display = 'block';
     }
@@ -73,7 +106,6 @@
         }
     }
 
-    // Appeler la fonction showMatchs pour afficher la journée par défaut
     showMatchs();
 </script>
 </body>

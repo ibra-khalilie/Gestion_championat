@@ -24,16 +24,10 @@ public class EquipeController {
         this.defaultMapper = defaultMapper;
     }
 
-    public List<EquipeDto> getAllTeam() {
-        return this.equipeService.getAll().stream()
-                .map(equipe -> defaultMapper.mapEntityToDto(equipe, EquipeDto.class))
-                .collect(Collectors.toList());
-    }
-
     @GetMapping("/equipe/{nom}")
     public String showEquipeInfo(@PathVariable String nom, Model model) {
 
-        Equipe equipe = equipeService.findEquipeByName(nom);
+        EquipeDto equipe = equipeService.findEquipeByName(nom);
         model.addAttribute("equipe", equipe);
 
         return "equipeInfo";

@@ -35,16 +35,43 @@ public class ChampionnatController {
 
         return dtoList;
     }
+    @GetMapping("/classement")
+    public String classementPage(Model model) {
+        List<ChampionnatDto> tousLesChampionnatsDto = championnatService.getAll();
+
+        model.addAttribute("tousLesChampionnats", tousLesChampionnatsDto);
+
+
+        if (!tousLesChampionnatsDto.isEmpty()) {
+            Long championnatIdParDefaut = tousLesChampionnatsDto.get(0).getId();
+            List<EquipeClassement> classementParDefaut = championnatService.calculerClassement(championnatIdParDefaut);
+
+            model.addAttribute("classement", classementParDefaut);
+            model.addAttribute("championnat", tousLesChampionnatsDto.get(0));
+        }
+
+        return "classement";
+    }
+
 
     @GetMapping("/classement/{championnatId}")
     public String getClassement(@PathVariable Long championnatId, Model model) {
-        List<EquipeClassement> classement = championnatService.calculerClassement(championnatId);
-        Championnat championnat = championnatService.getChampionnatById(championnatId);
 
-        model.addAttribute("championnat", championnat);
+        List<ChampionnatDto> tousLesChampionnatsDto = championnatService.getAll();
+        model.addAttribute("tousLesChampionnats", tousLesChampionnatsDto);
+
+
+        ChampionnatDto championnatDto = championnatService.getChampionnatById(championnatId);
+        model.addAttribute("championnat", championnatDto);
+
+        List<EquipeClassement> classement = championnatService.calculerClassement(championnatId);
+
+
         model.addAttribute("classement", classement);
 
         return "classement";
     }
+
+
 
 }

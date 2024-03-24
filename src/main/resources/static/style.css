@@ -1,0 +1,10 @@
+.custom-container {
+    max-width: 70%;
+}
+
+.score-box {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 5px;
+}

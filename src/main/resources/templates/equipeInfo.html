@@ -6,24 +6,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div th:replace="header :: header"></div>
 <div class="container mt-4">
-    <h1 th:text="${equipe.nom}"></h1>
-    <img th:src="@{${equipe.logo}}" class="img-fluid" alt="Logo de l'équipe">
-    <p><strong>Nom :</strong> <span th:text="${equipe.nom}"></span></p>
-    <p><strong>Fondé en :</strong> <span th:text="${equipe.dateDeCreation}"></span></p>
-    <p><strong>Président :</strong> <span th:text="${equipe.president}"></span></p>
-    <p><strong>Entraîneur :</strong> <span th:text="${equipe.nomEntraineur}"></span></p>
-
-    <h3>Stade</h3>
-    <p><strong>Site :</strong> <span th:text="${equipe.siteWeb}"></span></p>
-    <p><strong>Statut :</strong> <span th:text="${equipe.statut}"></span></p>
-    <p><strong>Siège :</strong> <span th:text="${equipe.siege}"></span></p>
-
-    <h3>Stade de </strong> <span th:text="${equipe.nom}"></span></h3>
-    <p><strong>Stade :</strong> <span th:text="${equipe.stade.nom}"></span></p>
-    <p><strong>Capacité :</strong> <span th:text="${equipe.stade.capacite + ' ' + 'places'}"></span></p>
-    <p><strong>Adresse du stade :</strong> <span th:text="${equipe.stade.adresse}"></span></p>
-    <p><strong>Tel.Stade :</strong> <span th:text="${equipe.stade.telephone}"></span></p>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 th:text="${equipe.nom}"></h1>
+            <img th:src="@{${'/logos/' + equipe.logo}}" th:alt="${equipe.nom}" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <p class="card-text"><strong>Nom :</strong> <span th:text="${equipe.nom}"></span></p>
+                    <p class="card-text"><strong>Fondé en :</strong> <span th:text="${#dates.format(equipe.dateDeCreation, 'YYYY')}"></span></p>
+                    <p class="card-text"><strong>Président :</strong> <span th:text="${equipe.president}"></span></p>
+                    <p class="card-text"><strong>Entraîneur :</strong> <span th:text="${equipe.nomEntraineur}"></span></p>
+                    <!-- Administration Section -->
+                    <h3 class="mt-4">Administration</h3>
+                    <p class="card-text"><strong>Site :</strong> <a href="#" th:href="${equipe.siteWeb}" th:text="${equipe.siteWeb}"></a></p>
+                    <p class="card-text"><strong>Statut :</strong> <span th:text="${equipe.statut}"></span></p>
+                    <p class="card-text"><strong>Siège :</strong> <span th:text="${equipe.siege}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <h3>Stade de <span th:text="${equipe.nom}"></span></h3>
+            <p><strong>Stade :</strong> <span th:text="${equipe.stade.nom}"></span></p>
+            <p><strong>Capacité :</strong> <span th:text="${equipe.stade.capacite + ' places'}"></span></p>
+            <p><strong>Adresse du stade :</strong> <span th:text="${equipe.stade.adresse}"></span></p>
+            <p><strong>Tel.Stade :</strong> <span th:text="${equipe.stade.telephone}"></span></p>
+        </div>
+    </div>
 </div>
+<div th:replace="footer :: footer"></div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

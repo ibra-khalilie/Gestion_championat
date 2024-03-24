@@ -15,11 +15,4 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public List<Game> getAll(){
-        return this.gameRepository.findAll();
-    }
-
-    public List<Game> getMatchsByJournee(Long journeeId) {
-        return this.gameRepository.findByJourneeId(journeeId);
-    }
 }
